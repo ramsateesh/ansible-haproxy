@@ -1,0 +1,12 @@
+galaxy_info:
+  author: Ram Sateesh Talari
+  description: This will setup ha-proxy containers on all kinds of hosts
+  license: license (GPLv2)
+
+  min_ansible_version: 1.9
+
+  github_branch: https://github.com/ramsateesh/haproxy.git
+
+  galaxy_tags: []
+
+  dependencies: []

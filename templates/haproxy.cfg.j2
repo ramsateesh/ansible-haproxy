@@ -1,0 +1,18 @@
+global
+  daemon
+  maxconn {{max_connections}}
+
+defaults
+  mode http
+  timeout connect {{connect_timeout_milliseconds}}
+  timeout client {{client_timeout_milliseconds}}
+  timeout server {{client_timeout_milliseconds}}
+
+frontend {{frontend_name}}
+  bind *: {{frontend_port}}
+  default_backend: {{backend_name}}
+
+backend {{backend_name}}
+{% for backend_server in backend_servers %}
+sever {{backend_server.name}} {{backend_server.uri}}:{{backend_server.port}} check
+{% endfor %}

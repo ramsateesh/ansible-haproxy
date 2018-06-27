@@ -1,0 +1,41 @@
+---
+
+# collect facts about the os
+# - name: Register OS and Version
+  
+
+# download haproxy dependencies
+- name: Install haproxy dependencies
+  yum: 
+    name: libselinux-python
+    state: present
+  become: yes
+
+# download haproxy and install
+- name: Install haproxy
+  yum:
+    name: haproxy
+    state: present
+  become: yes
+
+# make sure you have haproxy directory in /etc
+- name: Ensure haproxy directory
+  file:
+    name: /etc/haproxy
+    state: present
+    owner: "{{haproxy_owner}}"
+    group: "{{haproxy_group}}"
+    mode: a+rw
+  beocme: yes
+
+# copy the haproxy.cfg into /etc/haproxy/
+- name: Copy haproxy.cfg
+  template:
+    src: "{{role_path}}/templates/haproxy.cfg.j2"
+    dest: "/etc/haproxy/haproxy.cfg"
+    owner: "{{haproxy_owner}}"
+    group: "{{haproxy_group}}"
+    mode: a+rx
+  become: yes
+  notify:
+  - restart haproxy
